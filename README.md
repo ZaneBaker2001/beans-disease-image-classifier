@@ -208,7 +208,7 @@ The serving config stores:
 
 ## Confusion Matrix 
 
-!(./sample_confusion_matrix.png)
+![Confusion Matrix](./sample_confusion_matrix.png)
 This confusion matrix reveals that: 
 - The model is strongest on healthy and bean_rust: it correctly classifies 42/42 healthy (100%) and 42/43 bean_rust (97.7%) samples, with almost no confusion between those classes.
 - The main weakness is angular_leaf_spot, where 34/43 (79.1%) are correct and most errors are predicted as bean_rust (8 cases), making that the key confusion to focus on improving.

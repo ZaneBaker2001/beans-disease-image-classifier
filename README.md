@@ -172,40 +172,6 @@ The serving config stores:
 | 5 | 0.2128 | 0.9410 | 0.9410 | 0.1635 | 0.9474 | 0.9466 |
 | 6 | 0.1534 | 0.9536 | 0.9536 | 0.1498 | 0.9398 | 0.9389 |
 
-### Final run summary
-
-```json
-{
-  "project": "Bean Leaf Disease Classifier",
-  "dataset": "Hugging Face beans",
-  "frameworks": [
-    "PyTorch",
-    "JAX",
-    "MLflow"
-  ],
-  "best_epoch": 3,
-  "temperature": 0.5890007615089417,
-  "test_uncalibrated": {
-    "accuracy": 0.921875,
-    "macro_f1": 0.9210289585383359,
-    "ece": 0.07752113649621606
-  },
-  "test_calibrated": {
-    "accuracy": 0.921875,
-    "macro_f1": 0.9210289585383359,
-    "ece": 0.053998676128685474
-  }
-}
-```
-
-### Interpretation
-
-- Best validation performance occurred on **Epoch 4/6** by the printed metrics, where validation macro F1 reached **0.9543**.
-- The saved summary reports `best_epoch: 3` because the code stores the best epoch using **zero-based indexing**.
-- Test-set **accuracy** and **macro F1** were unchanged by temperature scaling.
-- Calibration improved **ECE** from **0.0775** to **0.0540**, meaning confidence estimates became better aligned with observed correctness without changing classification decisions.
-- The learned temperature was **0.5890**, which sharpens the logits because the model divides logits by the temperature during inference.
-
 ## Confusion Matrix 
 
 ![Confusion Matrix](./sample_confusion_matrix.png)

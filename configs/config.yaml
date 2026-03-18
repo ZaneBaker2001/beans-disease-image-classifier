@@ -1,0 +1,14 @@
+experiment_name: beans-leaf-disease-portfolio
+run_name: efficientnetb0-pytorch-jax-calibration
+seed: 42
+image_size: 224
+batch_size: 32
+num_workers: 2
+epochs: 6
+lr: 0.0003
+weight_decay: 0.0001
+dropout: 0.2
+freeze_backbone_epochs: 1
+early_stopping_patience: 3
+mlflow_tracking_uri: mlruns
+output_dir: outputs

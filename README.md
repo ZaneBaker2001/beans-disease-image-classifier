@@ -240,31 +240,6 @@ outputs/
 └── serving_config.json
 ```
 
-## Notes on warnings from the recorded run
-
-The logged warnings are worth keeping in mind:
-
-1. **MLflow `artifact_path` deprecation**
-   - `mlflow.models.model` warns that `artifact_path` is deprecated in favor of `name`.
-   - This project currently uses:
-     - `mlflow.log_artifact(..., artifact_path=...)`
-     - `mlflow.pytorch.log_model(model, artifact_path="model")`
-   - It still works, but parts of the API may need a future update depending on the MLflow version you standardize on.
-
-2. **PyTorch Pickle / CloudPickle serialization warning**
-   - `mlflow.pytorch.log_model(...)` can serialize using Python object serialization.
-   - That is convenient, but deserializing untrusted artifacts can execute arbitrary code.
-   - For safer deployment packaging, prefer MLflow's safer export options when available.
-
-3. **Local version label stripping for `torch` and `torchvision`**
-   - The run used CPU wheel versions with local tags:
-     - `torch==2.10.0+cpu`
-     - `torchvision==0.25.0+cpu`
-   - MLflow logged installable PyPI-style requirements without the local tag:
-     - `torch==2.10.0`
-     - `torchvision==0.25.0`
-   - If exact CPU wheel reproduction matters, pin dependencies using `pip_requirements` or a `conda_env` instead of relying on the inferred MLflow environment.
-
 ## Implementation details
 
 ### Data pipeline

@@ -6,7 +6,7 @@ A compact image-classification project for the Hugging Face `beans` dataset that
 
 - Achieves 95% validation accuracy on bean disease classification
 - Reduces overconfidence using temperature scaling (ECE improvement)
-- End-to-end ML pipeline: training, calibration, MLflow tracking, inference
+- End-to-end ML pipeline: training, calibration, MLflow tracking, and inference
 - Combines a PyTorch model and JAX calibration in a single workflow
 
 ## Overview

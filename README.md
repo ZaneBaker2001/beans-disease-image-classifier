@@ -13,6 +13,48 @@ Core pieces:
 - **Experiment tracking:** MLflow parameters, metrics, artifacts, and model logging
 - **Inference:** standalone prediction script that uses the saved PyTorch weights plus a serving config containing calibration metadata
 
+## Relevance 
+
+- Raw neural network probabilities are often overconfident. In real-world applications, reliable confidence estimates are as important as accuracy.
+- This model demonstrates how temperature scaling improves probability reliability without changing predictions.
+
+## Quick Start  
+
+To setup the project locally and train the model:
+
+```bash
+git clone https://github.com/ZaneBaker2001/disease-classifier.git
+cd disease-classifier
+python3 -m venv .venv
+source .venv/bin/activate 
+pip3 install -r requirements.txt 
+python3 run_train.py --config configs/config.yaml
+```
+
+## Inference
+
+Predict on a single image:
+
+```bash
+python3 predict.py   --image path/to/image.jpg   --model outputs/best_model.pt   --serving-config outputs/serving_config.json
+```
+
+### Prediction output
+
+The prediction script returns JSON like:
+
+```json
+{
+  "predicted_class": "angular_leaf_spot",
+  "confidence": 0.97,
+  "class_probabilities": {
+    "angular_leaf_spot": 0.97,
+    "bean_rust": 0.02,
+    "healthy": 0.01
+  }
+}
+```
+
 ## Classes
 
 The dataset classes come from the Hugging Face `beans` dataset and are loaded directly from dataset metadata at runtime.
@@ -89,32 +131,6 @@ output_dir: outputs
 - `mlflow_tracking_uri`: local MLflow run store
 - `output_dir`: local directory for reports, plots, model weights, and serving config
 
-## Installation
-
-Create a Python environment and install dependencies:
-
-```bash
-pip install -r requirements.txt
-```
-
-Main dependencies:
-- PyTorch
-- Torchvision
-- Datasets
-- MLflow
-- JAX / jaxlib
-- scikit-learn
-- matplotlib
-- Pillow
-- PyYAML
-
-## Training
-
-Run training with the default config:
-
-```bash
-python run_train.py --config configs/config.yaml
-```
 
 ### Training pipeline
 
@@ -129,39 +145,12 @@ python run_train.py --config configs/config.yaml
 9. Evaluate test performance before and after calibration
 10. Save artifacts and log everything to MLflow
 
-## Inference
-
-Predict on a single image:
-
-```bash
-python predict.py   --image path/to/image.jpg   --model outputs/best_model.pt   --serving-config outputs/serving_config.json
-```
-
-### Prediction output
-
-The prediction script returns JSON like:
-
-```json
-{
-  "predicted_class": "angular_leaf_spot",
-  "confidence": 0.97,
-  "class_probabilities": {
-    "angular_leaf_spot": 0.97,
-    "bean_rust": 0.02,
-    "healthy": 0.01
-  }
-}
-```
-
-The serving config stores:
-- class names
-- learned temperature
-- image size
-- normalization mean/std
 
 ## Training results
 
 ### Per-epoch metrics
+
+A sample training run produced the following results:
 
 | Epoch | Train Loss | Train Acc | Train Macro F1 | Val Loss | Val Acc | Val Macro F1 |
 |---|---:|---:|---:|---:|---:|---:|
